@@ -3,9 +3,10 @@ import axios from "axios";
 
 export const fetchAsyncGallery = createAsyncThunk(
     "gallery/fetchAsyncGallery",
-    async () => {
-        const response = await axios.get(`https://api.imgur.com/3/gallery/hot/viral/day/1?showViral=true`, {
+    async (section, sort, window, viral) => {
+        const response = await axios.get(`https://api.imgur.com/3/gallery/${section}/${sort}/${window}/1?showViral=${viral}`, {
             headers: {
+                contentType: 'application/json',
                 Authorization: "Client-ID 7d18d8f35ea8c7d"
             }
         })
@@ -16,7 +17,8 @@ export const fetchAsyncGallery = createAsyncThunk(
 
 const initialState = {
     gallery: {},
-    image: {}
+    image: {},
+    loading: true
 }
 
 
@@ -33,7 +35,7 @@ const gallerySlice = createSlice({
         },
         [fetchAsyncGallery.fulfilled]: (state, {payload}) => {
             console.log('fetched');
-            return {...state, gallery: payload}
+            return {...state, gallery: payload, loading: false}
         },
         [fetchAsyncGallery.rejected]: () => {
             console.log('rejected');
@@ -43,4 +45,5 @@ const gallerySlice = createSlice({
 })
 
 export const getGallery = (state) => state.gallery.gallery
+export const getLoading = (state) => state.gallery.loading
 export default gallerySlice.reducer
