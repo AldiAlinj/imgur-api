@@ -35,7 +35,13 @@ const initialState = {
 const gallerySlice = createSlice({
   name: "gallery",
   initialState,
-  reducers: {},
+  reducers: {
+
+    removeImage: (state) => {
+      state.image = {}
+    },
+    
+  },
   extraReducers: {
     [fetchAsyncGallery.pending]: (state) => {
       console.log("Gallery Pending");
@@ -62,6 +68,7 @@ const gallerySlice = createSlice({
   },
 });
 
+export const {removeImage} = gallerySlice.actions
 export const getGallery = (state) => state.gallery.gallery;
 export const getImage = (state) => state.gallery.image;
 export const getLoading = (state) => state.gallery.loading;

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from './views/Home/Home';
 import SinglePost from "./views/SinglePost/SinglePost";
+import './App.scss'
 
 function App() {
   return (

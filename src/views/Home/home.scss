@@ -1,0 +1,50 @@
+@import "../../common/colors.scss";
+
+.movie-list, .show-list{
+    margin: 20px 0px;
+   h2 {
+    color: $font-secondary; 
+    margin-bottom: 10px;
+    font-weight: 400;
+   }
+}
+
+.card-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 15px;
+}
+
+.select-container{
+    display: flex;
+    justify-content: space-around;
+    margin: 60px;
+    gap: 25px;
+
+    .select-group{
+        display: flex;
+        flex-direction: column;
+
+        label{
+            color: $font-primary;
+        }
+        
+    }
+    }
+
+    @media screen and(max-width: 786px){
+        .select-container{
+            flex-direction: column;
+        }
+    }
+
+    @media screen and(min-width: 1100px){
+        .select-group{
+            select{
+                width: 250px;
+            }
+        }
+    }
+    
+   
+

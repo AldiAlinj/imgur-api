@@ -7,8 +7,7 @@ import {
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Card from "../../components/Card/Card";
-import "../../App.scss";
-
+import '../Home/home.scss'
 const Home = () => {
  
 const [parameters, setParameters] = useState({
@@ -22,7 +21,20 @@ const [parameters, setParameters] = useState({
   const loading = useSelector(getLoading);
   let tempGallery = [];
 
-  if (!loading) {
+
+
+
+
+
+  
+
+  useEffect(() => {
+    dispatch(fetchAsyncGallery(parameters));
+  }, [dispatch, parameters]);
+  
+  
+  
+    if (!loading) {
     gallery.data.map((item) => {
       item.images?.map((image) => {
         tempGallery.push(image);
@@ -33,15 +45,10 @@ const [parameters, setParameters] = useState({
   
   }
 
-  let imageGallery = tempGallery.filter(
+
+   let imageGallery = tempGallery.filter(
     (item) => item.type === "image/jpeg" || item.type === "image/png"
   );
-
-  useEffect(() => {
-    dispatch(fetchAsyncGallery(parameters));
-  }, [dispatch, parameters]);
-
-
 
 
 
@@ -51,16 +58,11 @@ const [parameters, setParameters] = useState({
         <div>load</div>
       ) : (
         <>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
-            }}
-          >
-            <div>
-              <h1>Section</h1>
+          <div className="select-container">
+            <div className="select-group">
+              <label htmlFor="section">Section</label>
               <select
+              id="section"
                 defaultValue={parameters.section}
                 onChange={(e) => setParameters({...parameters, section: e.target.value})}
               >
@@ -69,9 +71,10 @@ const [parameters, setParameters] = useState({
                 <option value="user">User</option>
               </select>
             </div>
-            <div>
-              <h1>Sort</h1>
+            <div className="select-group">
+            <label htmlFor="sort">Sort</label>
               <select
+                id="sort"
                 defaultValue={parameters.sort}
                 onChange={(e) => setParameters({...parameters, sort: e.target.value})}
               >
@@ -80,9 +83,10 @@ const [parameters, setParameters] = useState({
                 <option value="time">Time</option>
               </select>
             </div>
-            <div>
-              <h1>Window</h1>
+            <div className="select-group">
+            <label htmlFor="window">Window</label>
               <select
+              id="window"
                 defaultValue={parameters.window}
                 onChange={(e) => setParameters({...parameters, window: e.target.value})}
               >
@@ -93,9 +97,11 @@ const [parameters, setParameters] = useState({
                 <option value="all">All</option>
               </select>
             </div>
-            <div>
-              <h1>Viral</h1>
+            <div className="select-group">
+            <label htmlFor="viral">Viral</label>
+
               <select
+              id="viral"
                 defaultValue={parameters.viral}
                 onChange={(e) => setParameters({...parameters, viral: e.target.value})}
               >
@@ -104,7 +110,7 @@ const [parameters, setParameters] = useState({
               </select>
             </div>
           </div>
-          <div className="container">
+          <div className="card-container">
             {imageGallery.map((image) => (
               <Card link={image.link} description={image.description} key={image.id} id={image.id} />
             ))}
