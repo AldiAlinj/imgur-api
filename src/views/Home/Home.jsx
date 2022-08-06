@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import {
   fetchAsyncGallery,
-  fetchAsyncImage,
   getGallery,
   getLoading,
-} from "../features/gallerySlice";
+} from "../../features/gallerySlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import Card from "../components/Card/Card";
-import "../App.scss";
+import Card from "../../components/Card/Card";
+import "../../App.scss";
 
 const Home = () => {
-  const [section, setSection] = useState("hot");
-  const [sort, setSort] = useState("viral");
-  const [window, setWindow] = useState("day");
-  const [viral, setViral] = useState("true");
-
+ 
+const [parameters, setParameters] = useState({
+  section: 'hot',
+  sort: 'viral',
+  window: 'day',
+  viral: 'true',
+})
   const dispatch = useDispatch();
   const gallery = useSelector(getGallery);
   const loading = useSelector(getLoading);
@@ -37,10 +38,12 @@ const Home = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchAsyncGallery(section, sort, window, viral));
-    dispatch(fetchAsyncImage())
-    console.log(section, sort, window, viral);
-  }, [dispatch, section, sort, window, viral]);
+    dispatch(fetchAsyncGallery(parameters));
+  }, [dispatch, parameters]);
+
+
+
+
 
   return (
     <div>
@@ -58,8 +61,8 @@ const Home = () => {
             <div>
               <h1>Section</h1>
               <select
-                defaultValue={section}
-                onChange={(e) => setSection(e.target.value)}
+                defaultValue={parameters.section}
+                onChange={(e) => setParameters({...parameters, section: e.target.value})}
               >
                 <option value="hot">Hot</option>
                 <option value="top">Top</option>
@@ -69,8 +72,8 @@ const Home = () => {
             <div>
               <h1>Sort</h1>
               <select
-                defaultValue={sort}
-                onChange={(e) => setSort(e.target.value)}
+                defaultValue={parameters.sort}
+                onChange={(e) => setParameters({...parameters, sort: e.target.value})}
               >
                 <option value="hot">Viral</option>
                 <option value="top">Top</option>
@@ -80,8 +83,8 @@ const Home = () => {
             <div>
               <h1>Window</h1>
               <select
-                defaultValue={window}
-                onChange={(e) => setWindow(e.target.value)}
+                defaultValue={parameters.window}
+                onChange={(e) => setParameters({...parameters, window: e.target.value})}
               >
                 <option value="day">Day</option>
                 <option value="week">Week</option>
@@ -93,8 +96,8 @@ const Home = () => {
             <div>
               <h1>Viral</h1>
               <select
-                defaultValue={viral}
-                onChange={(e) => setViral(e.target.value)}
+                defaultValue={parameters.viral}
+                onChange={(e) => setParameters({...parameters, viral: e.target.value})}
               >
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
@@ -103,7 +106,7 @@ const Home = () => {
           </div>
           <div className="container">
             {imageGallery.map((image) => (
-              <Card link={image.link} description={image.description} key={image.id} />
+              <Card link={image.link} description={image.description} key={image.id} id={image.id} />
             ))}
           </div>
         </>
