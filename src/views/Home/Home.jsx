@@ -22,7 +22,7 @@ const [parameters, setParameters] = useState({
   const loading = useSelector(getLoading);
   let tempGallery = [];
 
-
+const [count, setCount] = useState(20)
 
 
 
@@ -51,9 +51,16 @@ const [parameters, setParameters] = useState({
     (item) => item.type === "image/jpeg" || item.type === "image/png"
   );
 
-    console.log(gallery)
-    console.log(imageGallery);
 
+  const loadMore = () => {
+    let tempCount = count + 10
+   setCount(tempCount)
+    console.log(count);
+    if(count >= imageGallery.length){
+      alert('No more posts!')
+    }
+  }
+  
 
   return (
     <div>
@@ -116,16 +123,12 @@ const [parameters, setParameters] = useState({
             </div>
           </div>
           <div className="card-container">
-            {imageGallery.map((image) => (
-              <Card 
-              link={image.link} 
-              description={image.description} 
-              key={image.id} 
-              id={image.id} 
-              ups={image.ups} 
-              downs={image.downs}
-              score={image.score} />
+            {imageGallery.slice(0, count).map((image) => (
+              <Card key={image.id} data={image} />
             ))}
+          </div>
+          <div className="load-more">
+            <button onClick={loadMore}>Load More</button>
           </div>
         </>
       )}

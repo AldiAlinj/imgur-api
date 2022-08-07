@@ -5,19 +5,7 @@ export const fetchAsyncGallery = createAsyncThunk(
   "gallery/fetchAsyncGallery",
   async (parameters) => {
     const url = `https://api.imgur.com/3/gallery/${parameters.section}/${parameters.sort}/${parameters.window}/1?showViral=${parameters.viral}`;
-    console.log(url);
     const response = await axios.get(url, {
-      headers: {
-        Authorization: "Client-ID 7d18d8f35ea8c7d",
-      },
-    });
-    return response.data;
-  }
-);
-export const fetchAsyncImage = createAsyncThunk(
-  "gallery/fetchAsyncImage",
-  async (id) => {
-    const response = await axios.get(`https://api.imgur.com/3/image/${id}`, {
       headers: {
         Authorization: "Client-ID 7d18d8f35ea8c7d",
       },
@@ -36,7 +24,9 @@ const gallerySlice = createSlice({
   name: "gallery",
   initialState,
   reducers: {
-
+    addImage: (state, {payload}) => {
+      state.image = payload
+    },
     removeImage: (state) => {
       state.image = {}
     },
@@ -54,21 +44,10 @@ const gallerySlice = createSlice({
     [fetchAsyncGallery.rejected]: () => {
       console.log("Gallery Rejected");
     },
-    [fetchAsyncImage.pending]: (state) => {
-      console.log("Image Pending");
-      return { ...state, loading: true };
-    },
-    [fetchAsyncImage.fulfilled]: (state, { payload }) => {
-      console.log("Image Fetched");
-      return { ...state, image: payload, loading: false };
-    },
-    [fetchAsyncImage.rejected]: () => {
-      console.log("Image rejected");
-    },
   },
 });
 
-export const {removeImage} = gallerySlice.actions
+export const {removeImage, addImage} = gallerySlice.actions
 export const getGallery = (state) => state.gallery.gallery;
 export const getImage = (state) => state.gallery.image;
 export const getLoading = (state) => state.gallery.loading;

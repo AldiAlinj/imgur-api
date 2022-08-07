@@ -1,36 +1,31 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchAsyncImage,
+  addImage,
   getImage,
   removeImage,
 } from "../../features/gallerySlice";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./singlePost.scss";
 import { HashLoader } from "react-spinners";
 
 const SinglePost = () => {
-  const { id } = useParams();
   const dispatch = useDispatch();
   const image = useSelector(getImage);
-  const votes = useLocation();
+  const data = useLocation();
 
-  const ups = votes.state.ups;
-  const downs = votes.state.downs;
-  const score = votes.state.score;
+  const imageData = data.state.image
 
-  console.log(image);
 
   useEffect(() => {
-    dispatch(fetchAsyncImage(id));
+    dispatch(addImage(imageData));
     return () => {
       dispatch(removeImage());
     };
-  }, [dispatch, id]);
+  }, [dispatch, imageData]);
 
   return (
-    <div className="movie-section">
+    <div className="post-section">
       {Object.keys(image).length === 0 ? (
         <div className="loader">
           <HashLoader color="white" />
@@ -38,39 +33,42 @@ const SinglePost = () => {
       ) : (
         <>
           <div className="section-left">
-            <div className="movie-title"></div>
-            <div className="movie-rating">
+            <div className="post-ratings">
               <span>
-                UpVotes <i className="fa fa-thumbs-up"></i> :{" "}
-                {ups ? ups : "No Up Votes"}
+                UpVotes <i className="fa fa-thumbs-up"></i> :
+                {image.ups ?  ' ' + image.ups : " No Up Votes"}
               </span>
               <span>
-                DownVotes <i className="fa fa-thumbs-down"></i> :{" "}
-                {downs ? downs : "No Down Votes"}
+                DownVotes <i className="fa fa-thumbs-down"></i> :
+                {image.downs ? ' ' + image.downs : " No Down Votes"}
               </span>
               <span>
-                Score <i className="fa fa-star"></i> :{" "}
-                {score ? score : "No score"}
+                Score <i className="fa fa-star"></i> :
+                {image.score ? ' ' + image.score : " No score"}
               </span>
             </div>
-            <div className="movie-plot"></div>
-            <div className="movie-info">
-              <div>
+            <div className="post-info">
+              <div className="info-block">
                 <span>Title</span>
-                <span>{image.data.title ? image.data.title : "No Title"}</span>
+                <span>{image.title ? image.title : "No Title"}</span>
               </div>
-              <div>
+              <div className="info-block">
                 <span>Description</span>
                 <span>
-                  {image.data.description
-                    ? image.data.description
+                  {image.description
+                    ? image.description
                     : "No description"}
                 </span>
               </div>
             </div>
           </div>
           <div className="section-right">
-            <img src={image.data.link} alt={image.data.title} />
+            <img src={image.link} alt={image.title} />
+          </div>
+          <div className="back">
+            <Link to='/'>
+            <i class="fa-solid fa-left"></i>Home
+            </Link>
           </div>
         </>
       )}

@@ -2,24 +2,24 @@ import React from "react";
 import "./card.scss";
 import { Link } from "react-router-dom";
 
-const Card = ({ link, description, id, ups, downs, score }) => {
+const Card = ({ data }) => {
   
   let slicedDesc = "";
 
-  if (description !== null) {
-    slicedDesc = description.slice(0, 50);
+  if (data.description !== null) {
+    slicedDesc = data.description.slice(0, 50);
   }
 
   return (
-    <div className="card-item">
-      <Link to={`/post/${id}`} state={{ ups: ups, downs: downs, score: score }}>
+    <div className="card-item" >
+      <Link to={`/post/${data.id}`} state={{ ups: data.ups, downs: data.downs, score: data.score, image: data }}>
         <div className="card-inner">
           <div className="card-top">
-            <img src={link} alt={description} />
+            <img src={data.link} alt={data.description} />
           </div>
           <div className="card-bottom">
             <div className="card-info">
-              <p>{description ? slicedDesc + "..." : "No Description"}</p>
+              <p>{data.description ? slicedDesc + "..." : "No Description"}</p>
             </div>
           </div>
         </div>
