@@ -7,7 +7,8 @@ import {
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Card from "../../components/Card/Card";
-import '../Home/home.scss'
+import '../Home/home.scss';
+import { HashLoader } from "react-spinners";
 const Home = () => {
  
 const [parameters, setParameters] = useState({
@@ -50,12 +51,16 @@ const [parameters, setParameters] = useState({
     (item) => item.type === "image/jpeg" || item.type === "image/png"
   );
 
+    console.log(gallery)
+    console.log(imageGallery);
 
 
   return (
     <div>
       {loading ? (
-        <div>load</div>
+        <div className="loader">
+          <HashLoader color="white"  />
+        </div>
       ) : (
         <>
           <div className="select-container">
@@ -112,7 +117,14 @@ const [parameters, setParameters] = useState({
           </div>
           <div className="card-container">
             {imageGallery.map((image) => (
-              <Card link={image.link} description={image.description} key={image.id} id={image.id} />
+              <Card 
+              link={image.link} 
+              description={image.description} 
+              key={image.id} 
+              id={image.id} 
+              ups={image.ups} 
+              downs={image.downs}
+              score={image.score} />
             ))}
           </div>
         </>
