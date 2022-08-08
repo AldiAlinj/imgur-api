@@ -37,9 +37,15 @@ React Router Dom
 & SASS.
 
 The data is fetched from the redux slice of the gallery as an action and is stored in a redux state.
+
 The action is then dispatched when the project is rendered to extra reducers so we can track the fetching process and it's outcome.
-After the api is fetched successfully the redux state is called to the Home component where it is filtered and displayed by mapping the data into the Card component. It can be re-fetched according to the parameters passed as arguments to display our selected filters.
+
+After the api is fetched successfully the redux state is called to the Home component where it is filtered and displayed by mapping the data into the Card component.
+
+It can be re-fetched according to the parameters passed as arguments to display our selected filters.
+
 There is also a loading state stored into redux states that checks if the data is fetched or not.
+
 When the card component is clicked the post data is passed on to the single post component where we dispatch an action to save the data to a post state in the redux store and another action is dispatched when returning so that the post state is set empty after the component is unmounted.
 
 ### `Credits`
