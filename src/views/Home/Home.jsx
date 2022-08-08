@@ -17,24 +17,27 @@ const [parameters, setParameters] = useState({
   window: 'day',
   viral: 'true',
 })
+const [count, setCount] = useState(20)
+
+
+  // Getting the data from the redux store
   const dispatch = useDispatch();
   const gallery = useSelector(getGallery);
   const loading = useSelector(getLoading);
   let tempGallery = [];
 
-const [count, setCount] = useState(20)
 
 
 
 
   
-
+  // Dispatching action to the reducer initially & when parameters change to update the gallery state
   useEffect(() => {
     dispatch(fetchAsyncGallery(parameters));
   }, [dispatch, parameters]);
   
   
-  
+  // Filtering the posts which have have image content if
     if (!loading) {
     gallery.data.map((item) => {
       item.images?.map((image) => {
@@ -46,16 +49,16 @@ const [count, setCount] = useState(20)
   
   }
 
-
+  //Filtering the image types
    let imageGallery = tempGallery.filter(
     (item) => item.type === "image/jpeg" || item.type === "image/png"
   );
 
 
+  // Load more functionality to load more posts
   const loadMore = () => {
-    let tempCount = count + 10
+    let tempCount = count + 8
    setCount(tempCount)
-    console.log(count);
     if(count >= imageGallery.length){
       alert('No more posts!')
     }
@@ -123,8 +126,8 @@ const [count, setCount] = useState(20)
             </div>
           </div>
           <div className="card-container">
-            {imageGallery.slice(0, count).map((image) => (
-              <Card key={image.id} data={image} />
+            {imageGallery.slice(0, count).map((image, index) => (
+              <Card key={image.id} data={image} index={index} />
             ))}
           </div>
           <div className="load-more">

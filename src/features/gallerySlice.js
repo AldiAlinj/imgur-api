@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// Fetching the data with the parameters given
+
 export const fetchAsyncGallery = createAsyncThunk(
   "gallery/fetchAsyncGallery",
   async (parameters) => {
@@ -20,17 +22,18 @@ const initialState = {
   loading: true,
 };
 
+//Created reducers for the local data and extra reducers to track the api calling
+
 const gallerySlice = createSlice({
   name: "gallery",
   initialState,
   reducers: {
-    addImage: (state, {payload}) => {
-      state.image = payload
+    addImage: (state, { payload }) => {
+      state.image = payload;
     },
     removeImage: (state) => {
-      state.image = {}
+      state.image = {};
     },
-    
   },
   extraReducers: {
     [fetchAsyncGallery.pending]: (state) => {
@@ -47,7 +50,7 @@ const gallerySlice = createSlice({
   },
 });
 
-export const {removeImage, addImage} = gallerySlice.actions
+export const { removeImage, addImage } = gallerySlice.actions;
 export const getGallery = (state) => state.gallery.gallery;
 export const getImage = (state) => state.gallery.image;
 export const getLoading = (state) => state.gallery.loading;
