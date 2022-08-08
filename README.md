@@ -9,7 +9,8 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-The API works only on IPv4 adress so localhost will not fetch the data
+The API works only on IPv4 adress so localhost will not fetch the data.
+
 Open {Your IPv4}:3000 to view it in your browser.
 
 The page will reload when you make changes.\
