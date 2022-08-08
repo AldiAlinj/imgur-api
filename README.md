@@ -48,6 +48,10 @@ There is also a loading state stored into redux states that checks if the data i
 
 When the card component is clicked the post data is passed on to the single post component where we dispatch an action to save the data to a post state in the redux store and another action is dispatched when returning so that the post state is set empty after the component is unmounted.
 
+
+### Live Version
+[Imgur Gallery](https://imgur-api-gallery.netlify.app/)
+
 ### `Credits`
 Aldi Alinj
 
